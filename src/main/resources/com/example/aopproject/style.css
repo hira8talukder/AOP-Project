@@ -1,0 +1,158 @@
+/* General Styles */
+.root {
+    -fx-background-color: #F5F5F5; /* Light Gray Background */
+    -fx-font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    -fx-font-size: 14px;
+}
+
+/* App Title */
+.app-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-alignment: center;
+    -fx-padding: 15px 0 10px 0;
+}
+
+/* Headings */
+.h1-label {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-padding: 10px 0;
+}
+
+.h2-label {
+    -fx-font-size: 16px;
+    -fx-font-weight: normal;
+    -fx-text-fill: #666666;
+    -fx-padding: 5px 0;
+}
+
+/* Card Style */
+.card-style {
+    -fx-background-color: #FFF8E1; /* Very light orange shade */
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-padding: 25;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0.0, 0, 5); /* Subtle shadow */
+}
+
+/* Form Fields */
+.form-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+}
+
+.form-field {
+    -fx-pref-width: 250px; /* Adjusted width */
+    -fx-max-width: 300px; /* Max width */
+    -fx-padding: 8px 10px;
+    -fx-border-color: #CCCCCC;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-background-color: #FFFFFF;
+}
+
+.form-field:focused {
+    -fx-border-color: #FF8C00; /* Dark Orange on focus */
+}
+
+.text-area {
+    -fx-pref-width: 250px;
+    -fx-max-width: 300px;
+    -fx-pref-height: 80px;
+    -fx-padding: 8px 10px;
+    -fx-border-color: #CCCCCC;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-background-color: #FFFFFF;
+}
+
+.text-area:focused {
+    -fx-border-color: #FF8C00;
+}
+
+/* Buttons */
+.button {
+    -fx-padding: 10px 20px;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-cursor: hand;
+}
+
+.primary-button {
+    -fx-background-color: #FF8C00; /* Dark Orange */
+    -fx-text-fill: #FFFFFF;
+}
+
+.primary-button:hover {
+    -fx-background-color: #E07B00;
+}
+
+.secondary-button {
+    -fx-background-color: #666666; /* Medium Gray */
+    -fx-text-fill: #FFFFFF;
+}
+
+.secondary-button:hover {
+    -fx-background-color: #555555;
+}
+
+.danger-button {
+    -fx-background-color: #F44336; /* Red */
+    -fx-text-fill: #FFFFFF;
+}
+
+.danger-button:hover {
+    -fx-background-color: #D32F2F;
+}
+
+/* Status Messages */
+.status-message {
+    -fx-font-size: 12px;
+    -fx-text-fill: #F44336; /* Red for errors */
+    -fx-padding: 5px 0;
+}
+
+/* Table View */
+.table-view {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #CCCCCC;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #E0E0E0;
+}
+
+.table-view .column-header {
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+.table-row-cell {
+    -fx-background-color: -fx-table-cell-border-color, #FFFFFF;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: -fx-table-cell-border-color, #F9F9F9;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #FFD700; /* Gold for selection */
+    -fx-text-fill: #333333;
+}
+
+/* Copyright Label */
+.copyright-label {
+    -fx-font-size: 11px;
+    -fx-text-fill: #999999;
+    -fx-alignment: center;
+    -fx-padding: 10px 0 5px 0;
+}

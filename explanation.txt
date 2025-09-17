@@ -1,0 +1,79 @@
+Project Explanation: AOP-Project
+
+This project is a JavaFX application designed to provide various services to users, including medicine delivery, plumber services, and electric device services. It features user registration, login, a user dashboard, and order history.
+
+**How the Project Works (Overall Architecture):**
+
+The application follows a Model-View-Controller (MVC) architectural pattern:
+
+*   **Model:**
+    *   `User.java`, `Order.java`, `ElectricDeviceService.java`, `MedicineDeliveryService.java`, `PlumberService.java`: These are plain old Java objects (POJOs) that represent the data structures used in the application.
+    *   `DatabaseManager.java`: Manages the connection to the H2 database and initializes the database schema (creates tables if they don't exist).
+    *   `UserDAO.java`, `OrderDAO.java`: Data Access Objects (DAOs) that provide an abstract interface to the database, handling CRUD (Create, Read, Update, Delete) operations for `User` and `Order` objects.
+*   **View:**
+    *   `.fxml` files (e.g., `home-view.fxml`, `login-view.fxml`, `user-dashboard-view.fxml`): These XML files define the user interface layout and elements using JavaFX.
+    *   `style.css`: Provides styling for the JavaFX components, controlling their appearance (colors, fonts, etc.).
+*   **Controller:**
+    *   `*.Controller.java` files (e.g., `HomeController.java`, `LoginController.java`, `UserDashboardController.java`): These classes handle user interactions from the View, process input, update the Model, and then update the View accordingly.
+*   **Main Application:**
+    *   `MainApplication.java`: The entry point of the JavaFX application, responsible for setting up the primary stage and loading the initial view.
+
+**Database Explanation:**
+
+The project uses an **H2 Database** in file mode, meaning the database is stored as a file on the local system. The database file is named `aop_project_db.mv.db` and is located in the project's root directory.
+
+**Key Database Components:**
+
+1.  **`pom.xml`:**
+    *   The `pom.xml` file includes the H2 database dependency:
+        ```xml
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>2.2.224</version>
+        </dependency>
+        ```
+    *   This dependency ensures that the H2 database driver is available to the application at runtime.
+
+2.  **`DatabaseManager.java`:**
+    *   This class is responsible for managing the database connection and schema initialization.
+    *   **`DB_URL`**: `jdbc:h2:./aop_project_db` specifies that it's an H2 database and the database file is `aop_project_db.mv.db` in the current directory (`.`).
+    *   **`DB_USER`**: `sa` (System Administrator) and `DB_PASSWORD`: `""` (empty string) are the default credentials for the H2 database.
+    *   **`getConnection()`**: This static method provides a `Connection` object to the database, which is used by DAOs to perform database operations.
+    *   **`initializeDatabase()`**: This method is called to create the necessary tables if they don't already exist. It defines the schema for two main tables:
+        *   **`users` table:**
+            *   `id`: Primary key, auto-incrementing integer.
+            *   `username`: Unique string, cannot be null.
+            *   `password`: String, cannot be null.
+            *   `name`: String.
+            *   `email`: String.
+            *   `address`: String.
+        *   **`orders` table:**
+            *   `order_id`: Primary key, auto-incrementing integer.
+            *   `username`: String, cannot be null, and is a foreign key referencing `users.username`. This links orders to specific users.
+            *   `service_type`: String, cannot be null (e.g., "Medicine Delivery", "Plumber Service").
+            *   `description`: String, details of the service request.
+            *   `status`: String (e.g., "Pending", "Completed").
+            *   `order_date`: Date.
+
+3.  **`UserDAO.java`:**
+    *   This class handles all database operations related to `User` objects.
+    *   **`addUser(User user)`**: Inserts a new user record into the `users` table.
+    *   **`getUserByUsername(String username)`**: Retrieves a `User` object from the database based on their username.
+    *   **`updateUser(User user)`**: Updates an existing user's details in the `users` table.
+
+4.  **`OrderDAO.java`:**
+    *   This class handles all database operations related to `Order` objects.
+    *   **`addOrder(Order order)`**: Inserts a new order record into the `orders` table.
+    *   **`getOrdersByUsername(String username)`**: Retrieves a list of `Order` objects associated with a specific username from the `orders` table.
+
+**How Data Flows with the Database:**
+
+1.  **Application Startup:** When the application starts, `DatabaseManager.initializeDatabase()` is likely called (e.g., from `MainApplication` or a similar entry point) to ensure the `users` and `orders` tables exist.
+2.  **User Registration:** When a new user registers, a Controller (e.g., `RegistrationController`) collects the user's input. It then creates a `User` object and passes it to `UserDAO.addUser()` to persist the user's information in the `users` table.
+3.  **User Login:** During login, a Controller (e.g., `LoginController`) retrieves the entered username and password. It uses `UserDAO.getUserByUsername()` to fetch the user's details from the database and verifies the password.
+4.  **Service Requests (Orders):** When a user requests a service (e.g., medicine delivery, plumber service), the relevant Controller (e.g., `MedicineDeliveryController`) gathers the service details. It creates an `Order` object and uses `OrderDAO.addOrder()` to save the order in the `orders` table, linked to the logged-in user's username.
+5.  **User Dashboard/Order History:** When a user views their dashboard or order history, the respective Controller (e.g., `UserDashboardController`, `OrderHistoryController`) uses `OrderDAO.getOrdersByUsername()` to retrieve all orders associated with the current user from the database and displays them in the UI.
+6.  **User Profile Updates:** If a user updates their profile information, the `UserProfileController` collects the new data, updates the `User` object, and then calls `UserDAO.updateUser()` to save the changes to the `users` table.
+
+In summary, the H2 database acts as the persistent storage for the application's data. The `DatabaseManager` sets up and connects to this database, while the `UserDAO` and `OrderDAO` provide a clean, object-oriented way for the application's business logic (in the Controllers) to interact with the database without dealing directly with SQL queries in every part of the application.
